@@ -1,1 +1,36 @@
+name: PrintSoftwareVersions
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  processing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Show software versions (processing level)
+        run: |
+          echo "Python version:"
+          python3 --version
+          echo "Pip version:"
+          pip3 --version
+          echo "Node version:"
+          node --version
+          echo "npm version:"
+          npm --version
+
+  database:
+    needs: processing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show SQL versions (data access level)
+        run: |
+          echo "Trying MySQL:"
+          mysql --version || echo "MySQL not installed"
+          echo "Trying MariaDB:"
+          mariadb --version || echo "MariaDB not installed"
 
