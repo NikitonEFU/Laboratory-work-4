@@ -1,9 +1,11 @@
 name: ProgramCodeConvention
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
+
 
 jobs:
   lint_python:
