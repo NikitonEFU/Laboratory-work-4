@@ -1,0 +1,20 @@
+name: DataSchemaCodeConvention
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sql_lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install sqlfluff
+        run: pip install sqlfluff
+
+      - name: Run SQL Linter
+        run: |
+          sqlfluff lint DataSchema.sql --dialect mysql
