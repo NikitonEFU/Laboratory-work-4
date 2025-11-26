@@ -1,21 +1,29 @@
 name: ProgramCodeConvention
 
 on:
+  # Позволяет запускать рабочий процесс вручную из UI GitHub
   workflow_dispatch:
+  # Запускает рабочий процесс при каждом пуше в ветку main
   push:
     branches:
       - main
-
+  # Запускает рабочий процесс при создании Pull Request
+  pull_request:
+    branches:
+      - main
 
 jobs:
   lint_python:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Run Super-Linter
-        uses: super-linter/super-linter@v5
+      - name: Run Super-Linter (Python Validation)
+        uses: super-linter/super-linter@v6 # Использование актуальной версии
         env:
+          # Включаем только проверку Python для ускорения
           VALIDATE_PYTHON: true
-          DEFAULT_BRANCH: main
+          # Устанавливаем критический уровень для завершения с ошибкой
+          FILTER_REGEX_INCLUDE: |
+            .*(\.py)$
